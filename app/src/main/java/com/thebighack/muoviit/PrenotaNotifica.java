@@ -44,7 +44,6 @@ public class PrenotaNotifica extends Activity {
         findViewById(R.id.bellButton).setVisibility(View.VISIBLE);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         wv = (WebView) findViewById(R.id.webview);
 
         wv.getSettings().setJavaScriptEnabled(true);
