@@ -21,7 +21,8 @@
         </activity>
         <activity
             android:name=".PrenotaNotifica"
-            android:label="@string/title_activity_prenota_notifica" >
+            android:label="@string/title_activity_prenota_notifica"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

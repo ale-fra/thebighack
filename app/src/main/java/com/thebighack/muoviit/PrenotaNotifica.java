@@ -2,11 +2,16 @@ package com.thebighack.muoviit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,8 +45,15 @@ public class PrenotaNotifica extends Activity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
-        findViewById(R.id.bellButton).setVisibility(View.VISIBLE);
+        setContentView(R.layout.activity_prenota_notifica);
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        findViewById(R.id.bellButton).setVisibility(View.VISIBLE);
+
+                    }
+                },
+                200);
 
         super.onCreate(savedInstanceState);
         wv = (WebView) findViewById(R.id.webview);
@@ -92,7 +104,40 @@ public class PrenotaNotifica extends Activity {
         }
         @JavascriptInterface
         public void triggerAction() {
-            Toast.makeText(mContext,"just a test",Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Notifica Attivata! :D ", Toast.LENGTH_SHORT).show();
+            finish();
+
+
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            Intent intent = new Intent(mContext, PrenotaNotifica.class);
+                            PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                            NotificationCompat.Builder b = new NotificationCompat.Builder(mContext);
+
+                            b.setAutoCancel(true)
+                                    .setDefaults(Notification.DEFAULT_ALL)
+                                    .setWhen(System.currentTimeMillis())
+                                    .setSmallIcon(R.mipmap.bell_256)
+                                    .setTicker("Hearty365")
+                                    .setContentTitle("Autobus in Arrivo!")
+                                    .setContentText("Il tuo autobus è in arrivo! corri :)")
+                                    .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
+                                    .setContentIntent(contentIntent)
+                                    .setContentInfo("Info");
+
+
+                            NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                            notificationManager.notify(1, b.build());
+                        }
+                    },
+                    5000);
+
+
+
+
         }
     }
 }

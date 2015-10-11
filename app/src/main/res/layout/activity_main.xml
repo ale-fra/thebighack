@@ -7,8 +7,8 @@
 
 
     <WebView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/webview"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/bellButton"
-        android:layout_marginEnd="115dp"
+        android:layout_marginEnd="120dp"
         android:layout_alignTop="@+id/webview"
         android:layout_alignParentEnd="true"
         android:src="@mipmap/bell_128"
