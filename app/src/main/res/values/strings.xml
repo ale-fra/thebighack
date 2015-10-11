@@ -4,4 +4,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_prenota_notifica">PrenotaNotifica</string>
+    <string name="gcm_defaultSenderId">1098868389742</string>
 </resources>
