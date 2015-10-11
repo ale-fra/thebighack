@@ -2,6 +2,9 @@ package com.thebighack.muoviit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +14,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.Menu;
@@ -41,6 +45,45 @@ public class MainActivity extends Activity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     private TextView mInformationTextView;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(intent != null && intent.getAction() != null ){
+            if(intent.getAction().equals("com.thebighack.muoviit.START_DESTINATION_NOTIFY")){
+
+                new android.os.Handler().postDelayed(
+                        new Runnable() {
+                            public void run() {
+                                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+//                                intent.setAction("com.thebighack.muoviit.START_DESTINATION_NOTIFY");
+                                PendingIntent contentIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                                NotificationCompat.Builder b = new NotificationCompat.Builder(MainActivity.this);
+
+                                b.setAutoCancel(true)
+                                        .setDefaults(Notification.DEFAULT_ALL)
+                                        .setWhen(System.currentTimeMillis())
+                                        .setSmallIcon(R.mipmap.bell_256)
+                                        .setTicker("Hearty365")
+                                        .setContentTitle("Sei arrivato!")
+                                        .setContentText("La destinazione è entro 200mt :)")
+                                        .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
+                                        .setContentIntent(contentIntent)
+                                        .setPriority(Notification.PRIORITY_MAX)
+                                        .setContentInfo("Info");
+
+
+                                NotificationManager notificationManager = (NotificationManager) MainActivity.this.getSystemService(Context.NOTIFICATION_SERVICE);
+                                notificationManager.notify(1, b.build());
+                            }
+                        },
+                        5000);
+
+
+            }
+        }
+    }
 
     /** Called when the activity is first created. */
     @Override

@@ -112,7 +112,8 @@ public class PrenotaNotifica extends Activity {
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
-                            Intent intent = new Intent(mContext, PrenotaNotifica.class);
+                            Intent intent = new Intent(mContext, MainActivity.class);
+                            intent.setAction("com.thebighack.muoviit.START_DESTINATION_NOTIFY");
                             PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                             NotificationCompat.Builder b = new NotificationCompat.Builder(mContext);
@@ -126,6 +127,7 @@ public class PrenotaNotifica extends Activity {
                                     .setContentText("Il tuo autobus è in arrivo! corri :)")
                                     .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
                                     .setContentIntent(contentIntent)
+                                    .setPriority(Notification.PRIORITY_MAX)
                                     .setContentInfo("Info");
 
 
